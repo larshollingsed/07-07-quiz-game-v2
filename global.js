@@ -45,16 +45,31 @@ function process_answer_submission() {
 
 document.getElementById("submitter").onclick = process_answer_submission;
 
-function next_button() {
+function clear_answer () {
   document.getElementById("answer").value = "";
-  document.getElementById("question_result").value = "";
-  round++;
-  if (round !== questions.length) {
-      next_question();
-  } else {
-    final_total();
-  }
+}
 
+function clear_question_result () {
+  document.getElementById("question_result").innerText = "";
+}
+
+function is_game_over () {
+  if (round < questions.length) {
+      return false; 
+  } else {
+      return true;
+  }
+};
+
+function next_button() {
+  clear_answer();
+  clear_question_result();
+  round++;
+  if (is_game_over() === true) {
+      final_total();
+  } else {
+      next_question();
+  }
 }
 
 document.getElementById("next").onclick = next_button;
