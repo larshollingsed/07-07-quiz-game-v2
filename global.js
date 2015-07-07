@@ -21,16 +21,23 @@ function given_answer() {
 
 function is_correct_answer(answer_text) {
   if (answer_text === questions[0].answer) {
-      return true
+      return true;
   } else {
-      return false
+      return false;
   }   
-}
+};
 
-function update_question_results (correct) {
+function update_question_result(correct) {
   if (correct === true) {
     document.getElementById("question_result").innerText = "Success!"
   } else {
     document.getElementById("question_result").innerText = "Wrong!"
   }
-}
+};
+
+function process_answer_submission() {
+  var user_answer = given_answer();
+  update_question_result(is_correct_answer(user_answer));
+};
+
+document.getElementById("submitter").onclick = process_answer_submission;
