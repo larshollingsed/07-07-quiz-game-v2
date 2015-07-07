@@ -1,5 +1,5 @@
 var round = 0;
-var correct = 0;
+var correct_answers = 0;
 var question1 = {question: "This ballet, composed by Igor Stravinsky and choreographed by Vaslav Nijinsky, almost caused a riot at its 1913 premiere.", choices: "A - Coppelia\nB - The Rite of Spring\nC - Les Sylphides\nD - The Nutcracker", answer: "b"};
 
 var question2 = {question: "Twyla Tharp won a Tony for Best Choroeography in 2003 for this Broadway show, based on the music of Billy Joel.", choices: "A - Kinky Boots\nB - Spiderman: Turn Off the Dark\nC - Movin' Out\nD - Hairspray", answer: "c"};
@@ -23,7 +23,6 @@ function given_answer() {
 
 function is_correct_answer(answer_text) {
   if (answer_text.toLowerCase() === questions[round].answer) {
-      correct++;
       return true;
   } else {
       return false;
@@ -32,6 +31,7 @@ function is_correct_answer(answer_text) {
 
 function update_question_result(correct) {
   if (correct === true) {
+    correct_answers++;
     document.getElementById("question_result").innerText = "Success!"
   } else {
     document.getElementById("question_result").innerText = "Wrong!"
@@ -41,6 +41,7 @@ function update_question_result(correct) {
 function process_answer_submission() {
   var user_answer = given_answer();
   update_question_result(is_correct_answer(user_answer));
+  document.getElementById("submitter").style.visibility="hidden";
 };
 
 document.getElementById("submitter").onclick = process_answer_submission;
@@ -65,6 +66,7 @@ function next_button() {
   clear_answer();
   clear_question_result();
   round++;
+  document.getElementById("submitter").style.visibility="visible";
   if (is_game_over() === true) {
       final_total();
   } else {
@@ -75,6 +77,6 @@ function next_button() {
 document.getElementById("next").onclick = next_button;
 
 function final_total() {
-  var final_statement = "You answered " + correct + " out of " + questions.length + "!\nThat's " + (correct / questions.length * 100).toFixed(0) + "% correct";
+  var final_statement = "You answered " + correct_answers + " out of " + questions.length + "!\nThat's " + (correct_answers / questions.length * 100).toFixed(0) + "% correct";
   document.getElementById("total_result").innerText = final_statement;
 }
